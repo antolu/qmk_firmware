@@ -17,24 +17,34 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 #include "keymap_swedish.h"
+#include "song_list.h"
+
+float se_song[][2] = SONG(QWERTY_SOUND);
+float us_song[][2] = SONG(COLEMAK_SOUND);
 
 enum preonic_layers {
-  _QWERTY,
-  _LOWER,
-  _RAISE,
+  _QWERTY_SE,
+  _LOWER_SE,
+  _RAISE_SE,
+  _QWERTY_US,
+  _LOWER_US,
+  _RAISE_US,
   _ADJUST
 };
 
 enum preonic_keycodes {
-  QWERTY = SAFE_RANGE,
-  LOWER,
-  RAISE,
+  QWERTY_SE = SAFE_RANGE,
+  QWERTY_US,
+  LOWER_SE,
+  RAISE_SE,
+  LOWER_US,
+  RAISE_US,
   BACKLIT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-/* Qwerty
+/* Qwerty Swedish
  * ,-----------------------------------------------------------------------------------.
  * |      |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -47,15 +57,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Ctrl |      | Win  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
-[_QWERTY] = LAYOUT_preonic_grid( \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,  KC_5,   KC_6,   KC_7,  KC_8,    KC_9,    KC_0,          KC_DEL, \
-  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,  KC_T,   KC_Y,   KC_U,  KC_I,    KC_O,    KC_P,          KC_BSPC, \
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,  KC_G,   KC_H,   KC_J,  KC_K,    KC_L,    NO_OSLH,       NO_AE, \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,  KC_B,   KC_N,   KC_M,  KC_COMM, KC_DOT,  RSFT_T(NO_AA), KC_ENT, \
-  KC_LCTL, KC_LCTL, KC_LGUI, KC_LALT, LOWER, KC_SPC, KC_SPC, RAISE, KC_LEFT, KC_DOWN, KC_UP,         KC_RGHT  \
+[_QWERTY_SE] = LAYOUT_preonic_grid( \
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,     KC_5,   KC_6,   KC_7,     KC_8,    KC_9,    KC_0,          KC_DEL, \
+  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,   KC_Y,   KC_U,     KC_I,    KC_O,    KC_P,          KC_BSPC, \
+  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    NO_OSLH,       NO_AE, \
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  RSFT_T(NO_AA), KC_ENT, \
+  KC_LCTL, KC_LALT, KC_LGUI, KC_LALT, LOWER_SE, KC_SPC, KC_SPC, RAISE_SE, KC_LEFT, KC_DOWN, KC_UP,         KC_RGHT \
 ),
 
-/* Lower
+/* Lower Swedish
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -63,20 +73,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |   !  |   *  |  /   |  %   |  ^   | Home |   4  |   5  |   6  |      |  *   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  ?   |  <   |  >   |      |      |  End |   1  |   2  |   3  |  0   |      |
+ * |      |  ?   |   '  |  "   |      |      |  End |   1  |   2  |   3  |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
-[_LOWER] = LAYOUT_preonic_grid( \
+[_LOWER_SE] = LAYOUT_preonic_grid( \
   _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, \
   _______, _______, NO_PLUS, NO_MINS, NO_EQL,     _______, _______, KC_7,    KC_8,    KC_9,    NO_ACUT, KC_BSPC, \
-  _______, NO_SECT, NO_ASTR, NO_SLSH, LSFT(KC_5), NO_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    _______, KC_PIPE, \
-  KC_CAPS, NO_QUES, NO_LESS, NO_GRTR, _______,    _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
+  _______, LSFT(KC_1), NO_ASTR, NO_SLSH, LSFT(KC_5), NO_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    _______, KC_PIPE, \
+  KC_CAPS, NO_QUES, NO_APOS, NO_QUO2, _______,    _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
   _______, _______, _______, _______, _______,    _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
 ),
 
-/* Raise
+/* Raise Swedish
  * ,-----------------------------------------------------------------------------------.
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -89,11 +99,74 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
-[_RAISE] = LAYOUT_preonic_grid( \
+[_RAISE_SE] = LAYOUT_preonic_grid( \
+  _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, KC_F1,   KC_F2,      KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL, \
+  _______, NO_PIPE, NO_AMPR,    NO_BSLS, NO_DLR,  NO_LESS, NO_GRTR, NO_LPRN, NO_LCBR, NO_LBRC, KC_PGUP, _______, \
+  _______, NO_GRV,  LSFT(KC_3), NO_AT,   NO_UNDS, NO_QUOT, NO_TILD, NO_RPRN, NO_RCBR, NO_RBRC, KC_PGDN, _______, \
+  _______, KC_PSCR, _______,    _______, _______, KC_SPC,  KC_SPC,  _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY  \
+),
+
+/* Qwerty International
+ * ,-----------------------------------------------------------------------------------.
+ * |      |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | Enter|
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   \  |Shift |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Ctrl |      | Win  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_QWERTY_US] = LAYOUT_preonic_grid( \
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,     KC_5,   KC_6,   KC_7,     KC_8,    KC_9,    KC_0,      KC_DEL, \
+  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,   KC_Y,   KC_U,     KC_I,    KC_O,    KC_P,      KC_BSPC, \
+  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    KC_SCOLON, KC_ENT, \
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  KC_BSLS,   KC_RSFT, \
+  KC_LCTL, KC_LALT, KC_LGUI, KC_LALT, LOWER_US, KC_SPC, KC_SPC, RAISE_US, KC_LEFT, KC_DOWN, KC_UP,     KC_RGHT \
+),
+
+/* Lower International
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |      |   +  |  -   |  =   |      |      |   7  |   8  |   9  |   ,  | Bksp |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |   !  |   *  |  /   |  %   |  ^   | Home |   4  |   5  |   6  |      |  *   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |  ?   |   '  |  "   |      |      |  End |   1  |   2  |   3  |  0   |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_LOWER_US] = LAYOUT_preonic_grid( \
+  _______, _______, _______, _______,  _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, KC_PLUS, KC_MINUS, KC_EQL,  _______, _______, KC_7,    KC_8,    KC_9,    KC_COMM, _______, \
+  _______, KC_EXLM, KC_ASTR, KC_SLSH,  KC_PERC, KC_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    KC_DOT,  _______, \
+  KC_CAPS, KC_QUES, KC_QUOT, KC_DQT,   _______, _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
+  _______, _______, _______,  _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
+),
+
+/* Raise International
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F0  | Del  |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      |  |   |   &  |  \   |  $   |  <   |  >   |   (  |   {  |   [  | PgUp |  '   |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |  #   |  @   |  _   |  '   |  ~   |   )  |   }  |   ]  | PgDn |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_RAISE_US] = LAYOUT_preonic_grid( \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL, \
-  _______, NO_PIPE, NO_AMPR, NO_BSLS, NO_DLR,  NO_APOS, NO_QUO2, NO_LPRN, NO_RPRN, NO_LBRC, NO_RBRC, _______, \
-  _______, NO_PND,  KC_NUHS, NO_AT,   NO_UNDS, NO_QUOT, NO_TILD, NO_LCBR, NO_RCBR, KC_PGUP, KC_PGDN, _______, \
+  _______, KC_PIPE, KC_AMPR, KC_BSLS, KC_DLR,  KC_LT,   KC_GT,   KC_LPRN, KC_LCBR, KC_LBRC, KC_PGUP, _______, \
+  _______, _______, S(KC_3), KC_AT,   KC_UNDS, KC_GRV,  KC_TILD, KC_RPRN, KC_RCBR, KC_RBRC, KC_PGDN, _______, \
   _______, KC_PSCR, _______, _______, _______, KC_SPC,  KC_SPC,  _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY  \
 ),
 
@@ -103,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|AudOff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|      |      |
+ * |      |      |      |Aud on|AudOff|AGnorm|AGswap| sv_SE| en_US|      |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -111,11 +184,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid( \
-  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
-  _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, _______, KC_DEL,  \
-  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  _______, _______,  _______, _______, \
-  _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
+  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,     KC_F9,     KC_F10,  KC_F11,  KC_F12,  \
+  _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON,   TERM_OFF,  _______, _______, KC_DEL,  \
+  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY_SE, QWERTY_US, _______, _______, _______, \
+  _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______,   _______,   _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______,   _______,   _______, _______, _______  \
 )
 
 
@@ -123,29 +196,61 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-        case QWERTY:
+        case QWERTY_SE:
           if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY);
+            set_single_persistent_default_layer(_QWERTY_SE);
+	    #ifdef AUDIO_ENABLE
+	    PLAY_SONG(se_song);
+	    #endif
           }
           return false;
           break;
-        case LOWER:
+	case QWERTY_US:
           if (record->event.pressed) {
-            layer_on(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
-          } else {
-            layer_off(_LOWER);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+            set_single_persistent_default_layer(_QWERTY_US);
+	    #ifdef AUDIO_ENABLE
+	    PLAY_SONG(us_song);
+	    #endif
           }
           return false;
           break;
-        case RAISE:
+        case LOWER_SE:
           if (record->event.pressed) {
-            layer_on(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+            layer_on(_LOWER_SE);
+            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
           } else {
-            layer_off(_RAISE);
-            update_tri_layer(_LOWER, _RAISE, _ADJUST);
+            layer_off(_LOWER_SE);
+            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
+          }
+          return false;
+          break;
+        case RAISE_SE:
+          if (record->event.pressed) {
+            layer_on(_RAISE_SE);
+            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
+          } else {
+            layer_off(_RAISE_SE);
+            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
+          }
+          return false;
+          break;
+        case LOWER_US:
+          if (record->event.pressed) {
+            layer_on(_LOWER_US);
+            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
+          } else {
+            layer_off(_LOWER_US);
+            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
+          }
+          return false;
+          break;
+        case RAISE_US:
+          if (record->event.pressed) {
+            layer_on(_RAISE_US);
+            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
+          } else {
+            layer_off(_RAISE_US);
+            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
           }
           return false;
           break;
@@ -178,7 +283,7 @@ uint16_t muse_tempo = 50;
 
 void encoder_update_user(uint8_t index, bool clockwise) {
   if (muse_mode) {
-    if (IS_LAYER_ON(_RAISE)) {
+    if (IS_LAYER_ON(_RAISE_SE) || IS_LAYER_ON(_RAISE_US)) {
       if (clockwise) {
         muse_offset++;
       } else {
@@ -241,8 +346,8 @@ void matrix_scan_user(void) {
 
 bool music_mask_user(uint16_t keycode) {
   switch (keycode) {
-    case RAISE:
-    case LOWER:
+    case RAISE_US:
+    case LOWER_US:
       return false;
     default:
       return true;
