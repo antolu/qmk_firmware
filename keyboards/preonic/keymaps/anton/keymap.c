@@ -1,3 +1,4 @@
+
 /* Copyright 2015-2017 Jack Humbert
  *
  * This program is free software: you can redistribute it and/or modify
@@ -52,17 +53,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   Ö  |  Ä   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |Å/SHFT|Enter |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   Å  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Ctrl |      | Win  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY_SE] = LAYOUT_preonic_grid( \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,     KC_5,   KC_6,   KC_7,     KC_8,    KC_9,    KC_0,          KC_DEL, \
-  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,   KC_Y,   KC_U,     KC_I,    KC_O,    KC_P,          KC_BSPC, \
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    NO_OSLH,       NO_AE, \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  RSFT_T(NO_AA), KC_ENT, \
-  KC_LCTL, KC_LALT, KC_LGUI, KC_LALT, LOWER_SE, KC_SPC, KC_SPC, RAISE_SE, KC_LEFT, KC_DOWN, KC_UP,         KC_RGHT \
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,     KC_5,   KC_6,   KC_7,     KC_8,    KC_9,    KC_0,    KC_DEL, \
+  KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,   KC_Y,   KC_U,     KC_I,    KC_O,    KC_P,    KC_BSPC, \
+  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    NO_OSLH, NO_AE, \
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  NO_AA,   KC_ENT, \
+  KC_LCTL, KC_LALT, KC_LGUI, KC_LALT, LOWER_SE, KC_SPC, KC_SPC, RAISE_SE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
 /* Lower Swedish
@@ -79,11 +80,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER_SE] = LAYOUT_preonic_grid( \
-  _______, _______, _______, _______, _______,    _______, _______, _______, _______, _______, _______, _______, \
-  _______, _______, NO_PLUS, NO_MINS, NO_EQL,     _______, _______, KC_7,    KC_8,    KC_9,    NO_ACUT, KC_BSPC, \
-  _______, LSFT(KC_1), NO_ASTR, NO_SLSH, LSFT(KC_5), NO_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    _______, KC_PIPE, \
-  KC_CAPS, NO_QUES, NO_APOS, NO_QUO2, _______,    _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
-  _______, _______, _______, _______, _______,    _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, NO_PLUS, NO_MINS, NO_EQL,  _______, _______, KC_7,    KC_8,    KC_9,    KC_COMM, KC_BSPC, \
+  NO_ACUT, S(KC_1), NO_ASTR, NO_SLSH, S(KC_5), NO_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    KC_DOT,  KC_PIPE, \
+  KC_CAPS, NO_QUES, NO_APOS, NO_QUO2, _______, _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
 ),
 
 /* Raise Swedish
@@ -123,8 +124,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY_US] = LAYOUT_preonic_grid( \
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,     KC_5,   KC_6,   KC_7,     KC_8,    KC_9,    KC_0,      KC_DEL, \
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,   KC_Y,   KC_U,     KC_I,    KC_O,    KC_P,      KC_BSPC, \
-  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    KC_SCOLON, KC_ENT, \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  KC_BSLS,   KC_RSFT, \
+  KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    KC_SCOLON, KC_QUOT, \
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  KC_BSLS,   KC_ENT, \
   KC_LCTL, KC_LALT, KC_LGUI, KC_LALT, LOWER_US, KC_SPC, KC_SPC, RAISE_US, KC_LEFT, KC_DOWN, KC_UP,     KC_RGHT \
 ),
 
