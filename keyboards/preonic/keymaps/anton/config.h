@@ -2,6 +2,8 @@
 #define CONFIG_USER_H
 
 #include "config_common.h"
+#include "song_list.h"
+
 
 #ifdef AUDIO_ENABLE
     #define STARTUP_SONG SONG(PREONIC_SOUND)
