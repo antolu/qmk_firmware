@@ -43,6 +43,7 @@ enum planck_keycodes {
   RAISE_SE,
   LOWER_US,
   RAISE_US,
+  R_ARROW, 
   BACKLIT
 };
 
@@ -72,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |   !  |   *  |  /   |  %   |  ^   | Home |   4  |   5  |   6  |      |  *   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  ?   |   '  |  "   |      |      |  End |   1  |   2  |   3  |  0   |      |
+ * |      |  ?   |   '  |  "   |  ->  |      |  End |   1  |   2  |   3  |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
@@ -80,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER_SE] = LAYOUT_planck_grid( \
   _______, _______, NO_PLUS, NO_MINS, NO_EQL,     _______, _______, KC_7,    KC_8,    KC_9,    KC_COMM, KC_BSPC, \
   NO_ACUT, S(KC_1), NO_ASTR, NO_SLSH, LSFT(KC_5), NO_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    KC_DOT,  KC_PIPE, \
-  KC_CAPS, NO_QUES, NO_APOS, NO_QUO2, _______,    _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
+  KC_CAPS, NO_QUES, NO_APOS, NO_QUO2, R_ARROW,    _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
   _______, _______, _______, _______, _______,    _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
 ),
 
@@ -126,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |   !  |   *  |  /   |  %   |  ^   | Home |   4  |   5  |   6  |      |  *   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  ?   |   '  |  "   |      |      |  End |   1  |   2  |   3  |  0   |      |
+ * |      |  ?   |   '  |  "   |  ->  |      |  End |   1  |   2  |   3  |  0   |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
@@ -134,7 +135,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_LOWER_US] = LAYOUT_planck_grid( \
   KC_GRV,  _______, KC_PLUS, KC_MINUS, KC_EQL,  _______, _______, KC_7,    KC_8,    KC_9,    KC_COMM, _______, \
   _______, KC_EXLM, KC_ASTR, KC_SLSH,  KC_PERC, KC_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    KC_DOT,  _______, \
-  KC_CAPS, KC_QUES, KC_QUOT, KC_DQT,   _______, _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
+  KC_CAPS, KC_QUES, KC_QUOT, KC_DQT,   R_ARROW, _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
   _______, _______, _______,  _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
 ),
 
@@ -260,6 +261,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+  case R_ARROW:
+    if (record->event.pressed) {
+      SEND_STRING("->");
+    } else {}
   }
   return true;
 }
