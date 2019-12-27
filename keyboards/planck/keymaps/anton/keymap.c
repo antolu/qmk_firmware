@@ -17,11 +17,13 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 #include "keymap_swedish.h"
+#include "keymap_nordic.h"
 #include "song_list.h"
 
 #ifdef AUDIO_ENABLE
-float se_song[][2] = SONG(QWERTY_SOUND);
-float us_song[][2] = SONG(COLEMAK_SOUND);
+float se_song[][2]     = SONG(QWERTY_SOUND);
+float us_song[][2]     = SONG(COLEMAK_SOUND);
+float numpad_song[][2] = SONG(NUM_LOCK_ON_SOUND);
 #endif
 
 extern keymap_config_t keymap_config;
@@ -33,6 +35,7 @@ enum planck_layers {
   _QWERTY_US,
   _LOWER_US,
   _RAISE_US,
+  _NUMPAD,
   _ADJUST
 };
 
@@ -45,6 +48,7 @@ enum planck_keycodes {
   RAISE_US,
   R_ARROW, 
   KC_STD,
+  NUMPAD, 
   BACKLIT
 };
 
@@ -64,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY_SE] = LAYOUT_planck_grid( \
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,   KC_Y,   KC_U,     KC_I,    KC_O,    KC_P,    KC_BSPC, \
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    NO_OSLH, NO_AE, \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  NO_AA,   KC_ENT, \
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  SE_AA,   KC_ENT, \
   KC_LCTL, KC_LALT, KC_LGUI, KC_LALT, LOWER_SE, KC_SPC, KC_SPC, RAISE_SE, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT \
 ),
 
@@ -81,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER_SE] = LAYOUT_planck_grid( \
   _______, _______, NO_PLUS, NO_MINS, NO_EQL,     KC_F11 , KC_F12,  KC_7,    KC_8,    KC_9,    KC_COMM, KC_BSPC, \
-  NO_ACUT, S(KC_1), NO_ASTR, NO_SLSH, LSFT(KC_5), NO_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    KC_DOT,  KC_PIPE, \
+  NO_ACUT, S(KC_1), SE_ASTR, NO_SLSH, LSFT(KC_5), NO_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    KC_DOT,  KC_PIPE, \
   KC_CAPS, NO_QUES, NO_APOS, NO_QUO2, R_ARROW,    _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
   _______, _______, _______, _______, _______,    _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
 ),
@@ -142,8 +146,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Raise International
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |  |   |   &  |  \   |  $   |  <   |  >   |   (  |   {  |   [  | PgUp |  '   |
@@ -160,207 +162,230 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, KC_PSCR, _______, _______, _______, KC_SPC,  KC_SPC,  _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY  \
 ),
 
+/* Numpad SE
+ * ,-----------------------------------------------------------------------------------.
+ * |  TAB |   7  |   8  |   9  |   *  |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |  Esc |   4  |   5  |   6  |   -  |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |  Bspc|   1  |   2  |   3  |   +  |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |  Ent |   0  |   ,  |   /  |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_NUMPAD] = LAYOUT_planck_grid( \
+  KC_TAB,  KC_P7,   KC_P8,   KC_P9, KC_MPLY,  _______,  _______,  _______, _______, _______, _______, _______, \
+  KC_ESC,  KC_P4,   KC_P5,   KC_P6, KC_PMNS,  _______,  _______,  _______, _______, _______, _______, _______, \
+  KC_BSPC, KC_P1,   KC_P2,   KC_P3, KC_PPLS,  _______,  _______,  _______, _______, _______, _______, _______, \
+  KC_PENT, KC_P0, KC_PDOT, KC_PSLS, LOWER_US, _______,  _______, RAISE_US, _______, _______, _______, _______  \
+),
+
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
  * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|AudOff|AGnorm|AGswap| sv_SE| en_US|      |      |      |
+ * |      |      |      |Aud on|AudOff|AGnorm|AGswap| sv_SE| en_US| NMPAD|      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|      |      |      |      |      |
+ * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|      |      | NMLCK|      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid( \
   _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON,   TERM_OFF,  _______, _______, KC_DEL,  \
-  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY_SE, QWERTY_US, _______, _______, _______, \
-  _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______,   _______,   _______, _______, _______, \
+  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY_SE, QWERTY_US, NUMPAD, _______, _______, \
+  _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______,   _______,   KC_NLCK, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______,   _______,   _______, _______, _______  \
 )
 
 
 };
 
-/* uint32_t layer_state_set_user(uint32_t state) { */
-/*   return update_tri_layer_state(state, _LOWER_SE, _RAISE_SE, _ADJUST); */
-/* } */
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-       case QWERTY_SE:
-          if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY_SE);
-	    #ifdef AUDIO_ENABLE
-	    PLAY_SONG(se_song);
-	    #endif
-          }
-          return false;
-          break;
-	case QWERTY_US:
-          if (record->event.pressed) {
-            set_single_persistent_default_layer(_QWERTY_US);
-	    #ifdef AUDIO_ENABLE
-	    PLAY_SONG(us_song);
-	    #endif
-          }
-          return false;
-          break;
+    switch (keycode) {
+        case QWERTY_SE:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_QWERTY_SE);
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(se_song);
+#endif
+            }
+            return false;
+            break;
+        case QWERTY_US:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_QWERTY_US);
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(us_song);
+#endif
+            }
+            return false;
+            break;
+        case NUMPAD:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_NUMPAD);
+#ifdef AUDIO_ENABLE
+                PLAY_SONG(numpad_song);
+#endif
+            }
         case LOWER_SE:
-          if (record->event.pressed) {
-            layer_on(_LOWER_SE);
-            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
-          } else {
-            layer_off(_LOWER_SE);
-            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
-          }
-          return false;
-          break;
+            if (record->event.pressed) {
+                layer_on(_LOWER_SE);
+                update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
+            } else {
+                layer_off(_LOWER_SE);
+                update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
+            }
+            return false;
+            break;
         case RAISE_SE:
-          if (record->event.pressed) {
-            layer_on(_RAISE_SE);
-            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
-          } else {
-            layer_off(_RAISE_SE);
-            update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
-          }
-          return false;
-          break;
+            if (record->event.pressed) {
+                layer_on(_RAISE_SE);
+                update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
+            } else {
+                layer_off(_RAISE_SE);
+                update_tri_layer(_LOWER_SE, _RAISE_SE, _ADJUST);
+            }
+            return false;
+            break;
         case LOWER_US:
-          if (record->event.pressed) {
-            layer_on(_LOWER_US);
-            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
-          } else {
-            layer_off(_LOWER_US);
-            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
-          }
-          return false;
-          break;
+            if (record->event.pressed) {
+                layer_on(_LOWER_US);
+                update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
+            } else {
+                layer_off(_LOWER_US);
+                update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
+            }
+            return false;
+            break;
         case RAISE_US:
-          if (record->event.pressed) {
-            layer_on(_RAISE_US);
-            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
-          } else {
-            layer_off(_RAISE_US);
-            update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
-          }
-          return false;
-          break;
-  case BACKLIT:
-      if (record->event.pressed) {
-        register_code(KC_RSFT);
-        #ifdef BACKLIGHT_ENABLE
-          backlight_step();
-        #endif
-        #ifdef KEYBOARD_planck_rev5
-          PORTE &= ~(1<<6);
-        #endif
-      } else {
-        unregister_code(KC_RSFT);
-        #ifdef KEYBOARD_planck_rev5
-          PORTE |= (1<<6);
-        #endif
-      }
-      return false;
-      break;
-  case R_ARROW:
-    if (record->event.pressed) {
-      SEND_STRING("->");
-    } else {}
-  case KC_STD:
-    if (record->event.pressed) {
-      SEND_STRING("std::");
-    } else {}
-  }
-  return true;
+            if (record->event.pressed) {
+                layer_on(_RAISE_US);
+                update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
+            } else {
+                layer_off(_RAISE_US);
+                update_tri_layer(_LOWER_US, _RAISE_US, _ADJUST);
+            }
+            return false;
+            break;
+        case BACKLIT:
+            if (record->event.pressed) {
+                register_code(KC_RSFT);
+#ifdef BACKLIGHT_ENABLE
+                backlight_step();
+#endif
+#ifdef KEYBOARD_planck_rev5
+                PORTE &= ~(1 << 6);
+#endif
+            } else {
+                unregister_code(KC_RSFT);
+#ifdef KEYBOARD_planck_rev5
+                PORTE |= (1 << 6);
+#endif
+            }
+            return false;
+            break;
+        case R_ARROW:
+            if (record->event.pressed) {
+                SEND_STRING("->");
+            } else {
+            }
+        case KC_STD:
+            if (record->event.pressed) {
+                SEND_STRING("std::");
+            } else {
+            }
+    }
+    return true;
 }
 
-bool muse_mode = false;
-uint8_t last_muse_note = 0;
-uint16_t muse_counter = 0;
-uint8_t muse_offset = 70;
-uint16_t muse_tempo = 50;
+bool     muse_mode      = false;
+uint8_t  last_muse_note = 0;
+uint16_t muse_counter   = 0;
+uint8_t  muse_offset    = 70;
+uint16_t muse_tempo     = 50;
 
 void encoder_update(bool clockwise) {
-  if (muse_mode) {
-    if (IS_LAYER_ON(_RAISE_SE)) {
-      if (clockwise) {
-        muse_offset++;
-      } else {
-        muse_offset--;
-      }
+    if (muse_mode) {
+        if (IS_LAYER_ON(_RAISE_SE)) {
+            if (clockwise) {
+                muse_offset++;
+            } else {
+                muse_offset--;
+            }
+        } else {
+            if (clockwise) {
+                muse_tempo += 1;
+            } else {
+                muse_tempo -= 1;
+            }
+        }
     } else {
-      if (clockwise) {
-        muse_tempo+=1;
-      } else {
-        muse_tempo-=1;
-      }
+        if (clockwise) {
+#ifdef MOUSEKEY_ENABLE
+            tap_code(KC_MS_WH_DOWN);
+#else
+            tap_code(KC_PGDN);
+#endif
+        } else {
+#ifdef MOUSEKEY_ENABLE
+            tap_code(KC_MS_WH_UP);
+#else
+            tap_code(KC_PGUP);
+#endif
+        }
     }
-  } else {
-    if (clockwise) {
-      #ifdef MOUSEKEY_ENABLE
-        tap_code(KC_MS_WH_DOWN);
-      #else
-        tap_code(KC_PGDN);
-      #endif
-    } else {
-      #ifdef MOUSEKEY_ENABLE
-        tap_code(KC_MS_WH_UP);
-      #else
-        tap_code(KC_PGUP);
-      #endif
-    }
-  }
 }
 
 void dip_update(uint8_t index, bool active) {
-  switch (index) {
-    case 0:
-      if (active) {
-        #ifdef AUDIO_ENABLE
-	//PLAY_SONG(plover_song);
-        #endif
-        layer_on(_ADJUST);
-      } else {
-        #ifdef AUDIO_ENABLE
-	//PLAY_SONG(plover_gb_song);
-        #endif
-        layer_off(_ADJUST);
-      }
-      break;
-    case 1:
-      if (active) {
-        muse_mode = true;
-      } else {
-        muse_mode = false;
-        #ifdef AUDIO_ENABLE
-          stop_all_notes();
-        #endif
-      }
-   }
+    switch (index) {
+        case 0:
+            if (active) {
+#ifdef AUDIO_ENABLE
+                // PLAY_SONG(plover_song);
+#endif
+                layer_on(_ADJUST);
+            } else {
+#ifdef AUDIO_ENABLE
+                // PLAY_SONG(plover_gb_song);
+#endif
+                layer_off(_ADJUST);
+            }
+            break;
+        case 1:
+            if (active) {
+                muse_mode = true;
+            } else {
+                muse_mode = false;
+#ifdef AUDIO_ENABLE
+                stop_all_notes();
+#endif
+            }
+    }
 }
 
 void matrix_scan_user(void) {
-  #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
     if (muse_mode) {
-      if (muse_counter == 0) {
-        uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
-        if (muse_note != last_muse_note) {
-          stop_note(compute_freq_for_midi_note(last_muse_note));
-          play_note(compute_freq_for_midi_note(muse_note), 0xF);
-          last_muse_note = muse_note;
+        if (muse_counter == 0) {
+            uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
+            if (muse_note != last_muse_note) {
+                stop_note(compute_freq_for_midi_note(last_muse_note));
+                play_note(compute_freq_for_midi_note(muse_note), 0xF);
+                last_muse_note = muse_note;
+            }
         }
-      }
-      muse_counter = (muse_counter + 1) % muse_tempo;
+        muse_counter = (muse_counter + 1) % muse_tempo;
     }
-  #endif
+#endif
 }
 
 bool music_mask_user(uint16_t keycode) {
-  switch (keycode) {
-    case RAISE_SE:
-    case LOWER_SE:
-      return false;
-    default:
-      return true;
-  }
+    switch (keycode) {
+        case RAISE_SE:
+        case LOWER_SE:
+            return false;
+        default:
+            return true;
+    }
 }
