@@ -121,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Esc  |   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | Enter|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   \  |Shift |
+ * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Shift |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Ctrl |      | Win  | Alt  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
  * `-----------------------------------------------------------------------------------'
@@ -129,43 +129,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY_US] = LAYOUT_planck_grid( \
   KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,     KC_T,   KC_Y,   KC_U,     KC_I,    KC_O,    KC_P,      KC_BSPC, \
   KC_ESC,  KC_A,    KC_S,    KC_D,    KC_F,     KC_G,   KC_H,   KC_J,     KC_K,    KC_L,    KC_SCOLON, KC_QUOT, \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  KC_BSLS,   KC_ENT,  \
-  KC_LCTL, KC_LALT, KC_LGUI, KC_LALT, LOWER_US, KC_SPC, KC_SPC, RAISE_US, KC_LEFT, KC_DOWN, KC_UP,     KC_RGHT  \
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,     KC_B,   KC_N,   KC_M,     KC_COMM, KC_DOT,  KC_SLSH,   KC_ENT,  \
+  KC_LCTL, KC_LGUI, KC_LGUI, KC_LALT, LOWER_US, KC_SPC, KC_SPC, RAISE_US, KC_LEFT, KC_DOWN, KC_UP,     KC_RGHT  \
 ),
 
-/* Lower International
+/* Lower International  #@_&\$
  * ,-----------------------------------------------------------------------------------.
- * |      |      |   +  |  -   |  =   |  F11 |  F12 |   7  |   8  |   9  |   ,  | Bksp |
+ * |   `  | Sup1 | Sup2 | Sup3 | Sup4 |      |      | Home | End  |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |   !  |   *  |  /   |  %   |  ^   | Home |   4  |   5  |   6  |      |  *   |
+ * |      |   !  |   ?  |   $  |   #  |      |   @  |   {  |   }  |   _  |   ~  |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  ?   |   '  |  "   |  ->  |      |  End |   1  |   2  |   3  |  0   |      |
+ * |      |      |  ->  | std::|   &  |      |   ^  |   [  |   ]  |   \  |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER_US] = LAYOUT_planck_grid( \
-  KC_GRV,  _______, KC_PLUS, KC_MINUS, KC_EQL,  KC_F11,  KC_F12,  KC_7,    KC_8,    KC_9,    KC_COMM, _______, \
-  _______, KC_EXLM, KC_ASTR, KC_SLSH,  KC_PERC, KC_CIRC, KC_HOME, KC_4,    KC_5,    KC_6,    KC_DOT,  _______, \
-  KC_CAPS, KC_QUES, KC_QUOT, KC_DQT,   R_ARROW, _______, KC_END,  KC_1,    KC_2,    KC_3 ,   KC_0,    _______, \
+  KC_GRV,  G(KC_1), G(KC_2), G(KC_3),  G(KC_4), _______, _______, KC_HOME, KC_END,  _______, _______, _______, \
+  _______, KC_EXLM, KC_QUES, KC_DLR,   KC_HASH, _______, KC_AT,   KC_LCBR, KC_RCBR, KC_UNDS, KC_TILD, _______, \
+  _______, _______, R_ARROW, KC_STD,   KC_AMPR, _______, KC_CIRC, KC_LBRC, KC_RBRC, KC_BSLS, _______, _______, \
   _______, _______, _______,  _______, _______, _______, _______, _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY \
 ),
 
 /* Raise International
  * ,-----------------------------------------------------------------------------------.
- * |      |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 | Del  |
+ * |      |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   10 |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |  |   |   &  |  \   |  $   |  <   |  >   |   (  |   {  |   [  | PgUp |  '   |
+ * |      |   *  |   +  |   -  |  =   |   /  |   %  |   (  |   )  |      | PgUp |  |   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |  #   |  @   |  _   | std::|  ~   |   )  |   }  |   ]  | PgDn |      |
+ * |      |      |      |      |      |      |      |      |      |      | PgDn |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Next | Vol- | Vol+ | Play |
+ * |      |PrtScr|      |      |      |             |      | Next | Vol- | Vol+ | Play |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE_US] = LAYOUT_planck_grid( \
-  _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL, \
-  _______, KC_PIPE, KC_AMPR, KC_BSLS, KC_DLR,  KC_LT,   KC_GT,   KC_LPRN, KC_LCBR, KC_LBRC, KC_PGUP, _______, \
-  _______, _______, S(KC_3), KC_AT,   KC_UNDS, KC_STD,  KC_TILD, KC_RPRN, KC_RCBR, KC_RBRC, KC_PGDN, _______, \
+  _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______, \
+  KC_DEL,  KC_ASTR, KC_PLUS, KC_MINS, KC_EQL,  KC_SLSH, KC_PERC, KC_LPRN, KC_RPRN, _______, KC_PGUP, KC_PIPE, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_PGDN, _______, \
   _______, KC_PSCR, _______, _______, _______, KC_SPC,  KC_SPC,  _______, KC_MNXT, KC_VOLD, KC_VOLU, KC_MPLY  \
 ),
 
@@ -207,19 +207,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
+ * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      | RICKR|      |Aud on|AudOff|AGnorm|AGswap| sv_SE| en_US| NMPAD| PLOVR|      |
+ * | Reset| RICKR|      |Mus on|AudOn |MidiOn|AGswap| sv_SE| en_US| NMPAD| PLOVR|      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|      |      | NMLCK|      |      |
+ * | Debug|Voice-|Voice+|MusOff|AudOff|MidOff|AGnorm|      |      | NMLCK| Caps |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_planck_grid( \
-  _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON,   TERM_OFF,  _______, _______, KC_DEL,  \
-  _______, RICKRL, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY_SE, QWERTY_US, NUMPAD,  PLOVER, _______, \
-  _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______,   _______,   KC_NLCK, _______, _______, \
+  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,     KC_F9,     KC_F10,  KC_F11,  KC_F12,  \
+  RESET,   RICKRL,  MU_MOD,  MU_ON,   AU_ON,   MI_ON,   AG_SWAP, QWERTY_SE, QWERTY_US, NUMPAD,  PLOVER,  _______, \
+  DEBUG,   MUV_DE,  MUV_IN,  MU_OFF,  AU_OFF,  MI_OFF,  AG_NORM, TERM_ON,   TERM_OFF,  KC_NLCK, KC_CAPS, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______,   _______,   _______, _______, _______  \
 )
 
