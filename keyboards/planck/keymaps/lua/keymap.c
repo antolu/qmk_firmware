@@ -69,7 +69,7 @@ enum planck_keycodes {
 #define SYMBOL MO(_SYMBOL)
 #define NAVIGATE MO(_NAVIGATE)
 
-enum { TD_QUOTE = 0, TD_LCTL, TD_LSFT, TD_RCTL };
+enum { TD_QUOTE = 0, TD_LCTL, TD_LSFT, TD_RCTL, TD_RSFT };
 
 enum {
   SINGLE_TAP = 1,
@@ -531,7 +531,7 @@ void lshift_finished(tap_dance_state_t *state, void *user_data) {
   lshift_state.state = cur_dance(state);
   switch (lshift_state.state) {
   case SINGLE_TAP:
-    register_code(KC_LSFT);
+    register_code16(KC_LPRN);
     break;
   case SINGLE_HOLD:
     register_code(KC_LSFT);
@@ -548,10 +548,45 @@ void lshift_finished(tap_dance_state_t *state, void *user_data) {
 void lshift_reset(tap_dance_state_t *state, void *user_data) {
   switch (lshift_state.state) {
   case SINGLE_TAP:
-    unregister_code(KC_LSFT);
+    unregister_code16(KC_LPRN);
     break;
   case SINGLE_HOLD:
     unregister_code(KC_LSFT);
+    break;
+  case DOUBLE_TAP:
+    break;
+  case TRIPLE_TAP:
+    unregister_code(KC_CAPS);
+    break;
+  }
+  lshift_state.state = 0;
+}
+
+void rshift_finished(tap_dance_state_t *state, void *user_data) {
+  lshift_state.state = cur_dance(state);
+  switch (lshift_state.state) {
+  case SINGLE_TAP:
+    register_code16(KC_RPRN);
+    break;
+  case SINGLE_HOLD:
+    register_code(KC_RSFT);
+    break;
+  case DOUBLE_TAP:
+    caps_word_on();
+    break;
+  case TRIPLE_TAP:
+    register_code(KC_CAPS);
+    break;
+  }
+}
+
+void rshift_reset(tap_dance_state_t *state, void *user_data) {
+  switch (lshift_state.state) {
+  case SINGLE_TAP:
+    unregister_code16(KC_RPRN);
+    break;
+  case SINGLE_HOLD:
+    unregister_code(KC_RSFT);
     break;
   case DOUBLE_TAP:
     break;
@@ -567,4 +602,7 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_LSFT] =
         ACTION_TAP_DANCE_FN_ADVANCED(NULL, lshift_finished, lshift_reset),
     [TD_RCTL] =
-        ACTION_TAP_DANCE_FN_ADVANCED(NULL, rctrl_finished, rctrl_reset)};
+        ACTION_TAP_DANCE_FN_ADVANCED(NULL, rctrl_finished, rctrl_reset),
+    [TD_RSFT] =
+        ACTION_TAP_DANCE_FN_ADVANCED(NULL, rshift_finished, rshift_reset),
+};
